@@ -1,0 +1,163 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a simple API",
+    "version": "1.0.0",
+    "title": "Simple Inventory API",
+    "contact": {
+      "email": "you@your-company.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/quanghuy/harry_apis_todos/1.0.0",
+  "tags": [
+    {
+      "name": "admins",
+      "description": "Secured Admin-only calls"
+    },
+    {
+      "name": "developers",
+      "description": "Operations available to regular developers"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/todos": {
+      "get": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "get list of todos",
+        "description": "Get the list of exitings todos\n",
+        "operationId": "getList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "return list of todos",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TodoItem"
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "adds an todo item",
+        "description": "Adds an item to the system",
+        "operationId": "addTodo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "title",
+            "description": "Title of the todo that to be added",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TodoItem"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "item created"
+          },
+          "400": {
+            "description": "invalid input"
+          }
+        }
+      }
+    },
+    "/todos/{todoId}": {
+      "put": {
+        "tags": [
+          "developers"
+        ],
+        "summary": "update a todo item",
+        "description": "Update a todo item with new content",
+        "operationId": "updateTodo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "description": "Numeric ID of the todo item to get",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "title",
+            "description": "Title of the todo that to be added",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TodoItem"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "item updated"
+          },
+          "400": {
+            "description": "invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TodoItem": {
+      "type": "object",
+      "required": [
+        "id",
+        "is_completed",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "title": {
+          "type": "string",
+          "example": "Cook rice"
+        },
+        "is_completed": {
+          "type": "boolean",
+          "format": "number",
+          "example": false
+        }
+      }
+    },
+    "Todo": {
+      "description": "List of todos"
+    }
+  }
+}
